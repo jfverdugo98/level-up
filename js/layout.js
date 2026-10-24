@@ -12,7 +12,7 @@
     <header class="header">
       <nav class="container nav">
         <a href="index.html" class="brand" aria-label="Level Up - Inicio">
-          <img src="assets/emblema.svg" alt="">
+          <img src="assets/logo-icono.png" alt="">
           <span>LEVEL UP</span>
         </a>
         <ul class="tabs" id="tabs">
