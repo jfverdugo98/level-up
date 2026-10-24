@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Level Up · Consolas usadas y open box</title>
+  <meta name="description" content="Level Up: compra y venta de consolas Nintendo Switch usadas y open box. Tienda virtual en San Juan de Colón con entregas en San Cristóbal.">
+  <link rel="icon" href="assets/emblema.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body data-page="home">
+  <main>
+    <section class="hero container">
+      <img class="hero-emblem" src="assets/emblema.svg" alt="">
+      <h1>LEVEL UP</h1>
+      <p class="lead">Consolas Nintendo Switch usadas y open box, revisadas y listas para jugar. Escríbenos y coordinamos tu entrega en San Cristóbal.</p>
+      <div class="hero-cta">
+        <a class="btn btn-pink" href="productos.html">🎮 Ver catálogo</a>
+        <a class="btn btn-blue" id="heroWa" target="_blank" rel="noopener">💬 Escríbenos</a>
+      </div>
+      <div class="badges">
+        <span class="badge-pill">✅ Equipos revisados</span>
+        <span class="badge-pill">📦 Open box disponible</span>
+        <span class="badge-pill">🚚 Entregas en San Cristóbal</span>
+      </div>
+    </section>
+
+    <div class="bolt-divider"></div>
+
+    <section class="block container">
+      <h2 class="section-title"><span class="pink">DESTACADOS</span></h2>
+      <p class="section-sub">Lo que tenemos en stock ahora mismo.</p>
+      <div class="grid" id="destacados"></div>
+      <div style="text-align:center;margin-top:28px">
+        <a class="btn btn-blue" href="productos.html">Ver todos los productos →</a>
+      </div>
+    </section>
+
+    <section class="block container">
+      <h2 class="section-title"><span class="blue">¿POR QUE LEVEL UP?</span></h2>
+      <p class="section-sub">Comprar usado no tiene por qué ser un riesgo.</p>
+      <div class="features">
+        <div class="feature"><div class="ico">🔍</div><h3>Revisadas a fondo</h3><p>Probamos pantalla, Joy-Con, carga y conexión antes de venderlas.</p></div>
+        <div class="feature"><div class="ico">📦</div><h3>Usado y open box</h3><p>Equipos en excelente estado a mejor precio que nuevos.</p></div>
+        <div class="feature"><div class="ico">🚚</div><h3>Entrega en San Cristóbal</h3><p>Coordinamos contigo el punto y la hora de entrega.</p></div>
+        <div class="feature"><div class="ico">💬</div><h3>Atención directa</h3><p>Hablas con nosotros por WhatsApp, sin bots ni intermediarios.</p></div>
+      </div>
+    </section>
+
+    <section class="block container">
+      <div class="coming">
+        <div class="coming-card switch2">
+          <span class="tag">PROXIMAMENTE</span>
+          <h3>Nintendo Switch 2 nueva</h3>
+          <p>Muy pronto tendremos Switch 2 nueva en caja. Escríbenos para apartar la tuya y ser el primero en saber.</p>
+          <a class="btn btn-pink btn-sm" id="waSwitch2" target="_blank" rel="noopener">Quiero que me avisen</a>
+        </div>
+        <div class="coming-card ps">
+          <span class="tag">BAJO PEDIDO</span>
+          <h3>PlayStation 4 y 5</h3>
+          <p>También trabajamos PlayStation. ¿Buscas PS4 o PS5? Escríbenos y te avisamos cuando tengamos una.</p>
+          <a class="btn btn-blue btn-sm" id="waPs" target="_blank" rel="noopener">Consultar</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/config.js"></script>
+  <script src="data/productos.js"></script>
+  <script src="data/fotos.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/catalogo.js"></script>
+  <script>
+    document.getElementById("heroWa").href = waLink();
+    document.getElementById("waPs").href = waLink("¡Hola Level Up! 🎮 ¿Tienen disponible PlayStation 4 o 5?");
+    document.getElementById("waSwitch2").href = waLink("¡Hola Level Up! 🎮 Quiero que me avisen cuando llegue la Nintendo Switch 2.");
+    document.getElementById("destacados").innerHTML =
+      PRODUCTOS.filter((p) => p.destacado && p.disponible).slice(0, 4).map(renderCard).join("");
+  </script>
+</body>
+</html>

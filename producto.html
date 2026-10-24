@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Producto · Level Up</title>
+  <meta name="description" content="Detalle del producto en Level Up: fotos, qué incluye y características.">
+  <link rel="icon" href="assets/emblema.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body data-page="productos">
+  <main class="container block" id="detalle"></main>
+
+  <section class="container block" id="relacionadosWrap" hidden>
+    <h2 class="section-title"><span class="blue">TAMBIEN TE PUEDE GUSTAR</span></h2>
+    <div class="grid" id="relacionados"></div>
+  </section>
+
+  <div class="lightbox" id="lightbox" hidden>
+    <button class="lb-close" aria-label="Cerrar">✕</button>
+    <button class="lb-prev" aria-label="Foto anterior">‹</button>
+    <img alt="">
+    <button class="lb-next" aria-label="Foto siguiente">›</button>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="data/productos.js"></script>
+  <script src="data/fotos.js"></script>
+  <script src="js/layout.js"></script>
+  <script src="js/catalogo.js"></script>
+  <script src="js/producto.js"></script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nosotros · Level Up</title>
+  <meta name="description" content="Level Up es una tienda virtual de consolas en San Juan de Colón con entregas en San Cristóbal.">
+  <link rel="icon" href="assets/emblema.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body data-page="nosotros">
+  <main>
+    <section class="container block">
+      <h1 class="section-title"><span class="pink">NOSOTROS</span></h1>
+      <p class="section-sub">Hecho por Gamers para Gamers 🎮</p>
+      <div class="about-grid">
+        <div class="about-text">
+          <p><b class="blue">Level Up</b> nació de la pasión por los videojuegos y de una idea simple: que más personas puedan tener su consola sin pagar precio de nuevo.</p>
+          <p>Somos una <b>tienda 100% virtual</b> ubicada en <b>San Juan de Colón</b>. Compramos y vendemos consolas usadas y open box, principalmente Nintendo Switch, y cada equipo pasa por una revisión antes de llegar a tus manos.</p>
+          <p>Hacemos <b>entregas en San Cristóbal</b> y muy pronto traeremos la <b class="pink">Nintendo Switch 2 nueva</b>.</p>
+          <p>¿Quieres vender tu consola? También te escuchamos.</p>
+        </div>
+        <div class="info-card">
+          <div class="info-row"><div class="ico">📍</div><div><b>Ubicación</b><span id="ubic"></span></div></div>
+          <div class="info-row"><div class="ico">🛒</div><div><b>Tienda virtual</b><span>Sin local físico, atendemos por WhatsApp</span></div></div>
+          <div class="info-row"><div class="ico">🚚</div><div><b>Entregas</b><span id="entregas"></span></div></div>
+          <div class="info-row"><div class="ico">📱</div><div><b>WhatsApp</b><span id="tel"></span></div></div>
+          <a class="btn btn-wa" id="waAbout" target="_blank" rel="noopener" style="width:100%;margin-top:16px"></a>
+        </div>
+      </div>
+    </section>
+
+    <div class="bolt-divider"></div>
+
+    <section class="container block">
+      <div class="coming">
+        <div class="coming-card switch2">
+          <span class="tag">MISION</span>
+          <h3>Que todos puedan jugar</h3>
+          <p>Acercar los videojuegos a más personas ofreciendo consolas usadas y open box revisadas, a precios justos y con atención cercana y honesta por WhatsApp.</p>
+        </div>
+        <div class="coming-card ps">
+          <span class="tag">VISION</span>
+          <h3>El punto gamer del Táchira</h3>
+          <p>Ser la tienda de consolas de confianza en el Táchira, reconocida por la calidad de sus equipos, y crecer hasta ofrecer también consolas nuevas como la Nintendo Switch 2.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="bolt-divider"></div>
+
+    <section class="container block">
+      <h2 class="section-title"><span class="blue">¿COMO COMPRAR?</span></h2>
+      <p class="section-sub">Tres pasos y estás jugando.</p>
+      <div class="steps">
+        <div class="step"><h3>Elige tu consola</h3><p>Revisa el catálogo y toca "Lo quiero" en el producto que te guste.</p></div>
+        <div class="step"><h3>Escríbenos</h3><p>Se abre WhatsApp con el mensaje listo. Te confirmamos disponibilidad y te enviamos más fotos.</p></div>
+        <div class="step"><h3>Coordinamos la entrega</h3><p>Acordamos pago y punto de entrega en San Cristóbal. ¡A jugar!</p></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/config.js"></script>
+  <script src="js/layout.js"></script>
+  <script>
+    document.getElementById("ubic").textContent = LEVELUP.ubicacion;
+    document.getElementById("entregas").textContent = `Entregamos en ${LEVELUP.entregas}`;
+    document.getElementById("tel").textContent = LEVELUP.telefonoVisible;
+    const wa = document.getElementById("waAbout");
+    wa.href = waLink();
+    wa.innerHTML = `${WA_ICON} Escríbenos por WhatsApp`;
+  </script>
+</body>
+</html>

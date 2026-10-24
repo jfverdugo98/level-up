@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 160" role="img" aria-label="Level Up">
+  <defs>
+    <!-- Silueta del control con los botones recortados -->
+    <mask id="huecos">
+      <rect width="220" height="160" fill="#fff"/>
+      <rect x="47" y="56" width="30" height="10" rx="2" fill="#000"/>
+      <rect x="57" y="46" width="10" height="30" rx="2" fill="#000"/>
+      <circle cx="84" cy="98" r="12" fill="#000"/>
+      <circle cx="162" cy="48" r="7" fill="#000"/>
+      <circle cx="149" cy="61" r="7" fill="#000"/>
+      <circle cx="175" cy="61" r="7" fill="#000"/>
+      <circle cx="162" cy="74" r="7" fill="#000"/>
+      <circle cx="150" cy="100" r="12" fill="#000"/>
+    </mask>
+    <!-- Mitades separadas por el rayo -->
+    <clipPath id="izq"><polygon points="0,0 128,0 100,74 128,74 94,160 0,160"/></clipPath>
+    <clipPath id="der"><polygon points="140,0 220,0 220,160 106,160 140,64 112,64"/></clipPath>
+    <g id="control" mask="url(#huecos)">
+      <rect x="48" y="16" width="40" height="16" rx="6"/>
+      <rect x="132" y="16" width="40" height="16" rx="6"/>
+      <path d="M55,26 H165 C190,26 200,46 204,72 L212,116 C215,140 196,150 180,137 L150,110 H70 L40,137 C24,150 5,140 8,116 L16,72 C20,46 30,26 55,26 Z"/>
+    </g>
+  </defs>
+  <use href="#control" clip-path="url(#izq)" fill="#ff2ec4"/>
+  <use href="#control" clip-path="url(#der)" fill="#1e3bff"/>
+  <!-- Puntas del rayo -->
+  <polygon points="156,0 128,46 142,40" fill="#1e3bff"/>
+  <polygon points="100,109 114,109 90,152" fill="#ff2ec4"/>
+</svg>
