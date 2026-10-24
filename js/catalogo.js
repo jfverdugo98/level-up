@@ -2,6 +2,8 @@
 (function () {
   const COND = { usado: "Usado", openbox: "Open box", sellado: "Sellado" };
   const CAT = { consola: "Consola", accesorio: "Accesorio" };
+  // Versión cuadrada de 600 px que genera el script para las tarjetas.
+  const mini = (f) => f.replace(/\.jpg(\?|$)/, "-mini.jpg$1");
   const urlDetalle = (p) => `producto.html?id=${encodeURIComponent(p.id)}`;
   const msgWhatsApp = (p) => p.disponible
     ? `¡Hola Level Up! 🎮 Me interesa: ${p.nombre} (${COND[p.condicion]}). ¿Sigue disponible?`
@@ -30,7 +32,7 @@
   const mediaHTML = (p) => {
     const fotos = p.fotos || [];
     const img = fotos.length
-      ? `<img src="${fotos[0]}" alt="${p.nombre}" loading="lazy">`
+      ? `<img src="${mini(fotos[0])}" alt="${p.nombre}" loading="lazy">`
       : `<div class="placeholder"><div class="emoji">${p.emoji || "🎮"}</div><small>Foto próximamente</small></div>`;
     const dots = fotos.length > 1
       ? `<div class="photo-nav">${fotos.map((_, i) => `<button class="${i ? "" : "on"}" data-i="${i}" aria-label="Foto ${i + 1}"></button>`).join("")}</div>`
@@ -62,7 +64,7 @@
       </article>`;
 
   // Compartido con la página de detalle (js/producto.js)
-  window.CATALOGO = { COND, CAT, urlDetalle, msgWhatsApp, precioHTML };
+  window.CATALOGO = { COND, CAT, urlDetalle, msgWhatsApp, precioHTML, mini };
 
   // Cambiar de foto con los puntitos (delegado, sirve en Home y Catálogo)
   document.addEventListener("click", (e) => {
@@ -70,7 +72,7 @@
     if (!dot) return;
     const card = dot.closest(".card");
     const p = window.PRODUCTOS.find((x) => x.id === card.dataset.id);
-    card.querySelector(".card-media img").src = p.fotos[dot.dataset.i];
+    card.querySelector(".card-media img").src = mini(p.fotos[dot.dataset.i]);
     card.querySelectorAll(".photo-nav button").forEach((b) => b.classList.toggle("on", b === dot));
   });
 

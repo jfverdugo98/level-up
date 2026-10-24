@@ -251,10 +251,10 @@ section.block { padding: 56px 0; }
 .product-layout { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 40px; align-items: start; }
 .gallery { position: sticky; top: 90px; }
 .gallery-main {
-  position: relative; aspect-ratio: 1 / 1; background: #fff; border-radius: var(--radius);
+  position: relative; aspect-ratio: 1 / 1; background: var(--bg-2); border-radius: var(--radius);
   overflow: hidden; border: 1px solid var(--line);
 }
-.gallery-main > img { width: 100%; height: 100%; object-fit: cover; cursor: zoom-in; }
+.gallery-main > img { width: 100%; height: 100%; object-fit: contain; cursor: zoom-in; }
 .gallery-main.placeholder-big { background: var(--card); display: grid; place-items: center; text-align: center; color: var(--muted); }
 .gallery-main.placeholder-big .emoji { font-size: 90px; filter: drop-shadow(0 0 16px var(--pink)); }
 .g-prev, .g-next {

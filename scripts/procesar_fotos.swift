@@ -1,28 +1,39 @@
 // Prepara las fotos del catálogo de Level Up.
 //
-// Toma las fotos de fotos-originales/<carpeta-del-producto>/ y:
+// Toma las fotos de fotos-originales/<carpeta-del-producto>/ y, por defecto,
+// las deja como están (sin quitar el fondo): solo las achica a 1600 px como
+// máximo, las comprime y les borra los datos ocultos (GPS, teléfono, fecha).
+//
+// Con  --fondo-blanco  además:
 //   • si el producto se ve completo: quita el fondo con la IA del Mac (la misma
 //     de "Eliminar fondo" en Vista Previa) y lo centra sobre fondo blanco con
 //     una sombra suave;
 //   • si es un primer plano (el producto se sale del cuadro) o no se detecta:
 //     usa la foto original recortada en cuadrado, para no dejarlo "cortado".
-// La portada de cada producto siempre es una foto con fondo blanco (si hay alguna).
-// Guarda todo en assets/productos/ y escribe data/fotos.js para la web.
+//   La portada de cada producto es la primera foto con fondo blanco.
+//
+// De cada foto genera dos archivos en assets/productos/:
+//   <id>-N.jpg       grande, para la página del producto
+//   <id>-N-mini.jpg  cuadrada de 600 px, para las tarjetas del catálogo
+// y escribe data/fotos.js para la web.
 //
 // El id del producto es el nombre de la carpeta en minúsculas, con cualquier
 // símbolo cambiado por "-"  (ej. "joycons-pink&green" → "joycons-pink-green").
 //
-// Uso (desde la carpeta del proyecto):  swift scripts/procesar_fotos.swift
+// Uso (desde la carpeta del proyecto):  swift scripts/procesar_fotos.swift [--fondo-blanco]
 // O haz doble clic en "Preparar fotos.command".
 
 import CoreImage
 import Foundation
 import Vision
 
-let lado: CGFloat = 1200          // tamaño final (px), cuadrado
+let usarFondoBlanco = CommandLine.arguments.contains("--fondo-blanco")
+let ladoMaxOriginal: CGFloat = 1600  // lado más largo de la foto grande (modo original)
+let ladoMini: CGFloat = 600       // tarjetas del catálogo
+let lado: CGFloat = 1200          // tamaño final (px), cuadrado (modo fondo blanco)
 let margen: CGFloat = 0.09        // espacio alrededor del producto
 let toleranciaBorde = 0.006       // % del ancho/alto para decidir que "toca el borde"
-let calidadJPEG = 0.85
+let calidadJPEG = 0.82
 let extensiones: Set = ["jpg", "jpeg", "heic", "png"]
 
 let fm = FileManager.default
@@ -65,15 +76,31 @@ func tocaBorde(_ caja: CGRect, _ total: CGRect) -> Bool {
   return caja.minX <= tx || caja.minY <= ty || caja.maxX >= total.width - tx || caja.maxY >= total.height - ty
 }
 
-// Foto original recortada al centro en cuadrado.
-func cuadradoOriginal(_ foto: CIImage) -> CIImage {
+// Foto recortada al centro en cuadrado de `tam` px.
+func cuadrado(_ foto: CIImage, _ tam: CGFloat = lado) -> CIImage {
   let e = foto.extent, l = min(e.width, e.height)
-  let escala = lado / l
+  let escala = tam / l
   return foto
-    .cropped(to: CGRect(x: (e.width - l) / 2, y: (e.height - l) / 2, width: l, height: l))
-    .transformed(by: .init(translationX: -(e.width - l) / 2, y: -(e.height - l) / 2))
+    .cropped(to: CGRect(x: e.minX + (e.width - l) / 2, y: e.minY + (e.height - l) / 2, width: l, height: l))
+    .transformed(by: .init(translationX: -(e.minX + (e.width - l) / 2), y: -(e.minY + (e.height - l) / 2)))
     .transformed(by: .init(scaleX: escala, y: escala))
-    .cropped(to: lienzo)
+    .cropped(to: CGRect(x: 0, y: 0, width: tam, height: tam))
+}
+
+// Foto completa, achicada para que su lado más largo no pase de `maximo` (nunca la agranda).
+func achicada(_ foto: CIImage, _ maximo: CGFloat) -> CIImage {
+  let e = foto.extent
+  let escala = min(1, maximo / max(e.width, e.height))
+  guard escala < 1 else { return foto }
+  let salida = foto.applyingFilter("CILanczosScaleTransform", parameters: [kCIInputScaleKey: escala, kCIInputAspectRatioKey: 1])
+  return salida.cropped(to: CGRect(x: 0, y: 0, width: (e.width * escala).rounded(.down), height: (e.height * escala).rounded(.down)))
+}
+
+func guardarJPEG(_ imagen: CIImage, _ url: URL) throws {
+  // Sin metadatos: la foto publicada no debe llevar GPS, modelo del teléfono ni fecha.
+  try ctx.writeJPEGRepresentation(
+    of: imagen.settingProperties([:]), to: url, colorSpace: CGColorSpace(name: CGColorSpace.sRGB)!,
+    options: [CIImageRepresentationOption(rawValue: kCGImageDestinationLossyCompressionQuality as String): calidadJPEG])
 }
 
 func sobreFondoBlanco(_ foto: CIImage, mascara: CVPixelBuffer, caja: CGRect) -> CIImage {
@@ -115,21 +142,23 @@ func procesar(_ url: URL, a salida: URL) throws -> Modo {
   }
   foto = foto.transformed(by: .init(translationX: -foto.extent.minX, y: -foto.extent.minY))
 
-  var final = cuadradoOriginal(foto)
+  var final = achicada(foto, ladoMaxOriginal)
   var modo = Modo.original
-  let handler = VNImageRequestHandler(ciImage: foto)
-  let pedido = VNGenerateForegroundInstanceMaskRequest()
-  if (try? handler.perform([pedido])) != nil, let resultado = pedido.results?.first,
-     let mascara = try? resultado.generateScaledMaskForImage(forInstances: resultado.allInstances, from: handler),
-     let caja = cajaDeContenido(mascara), !tocaBorde(caja, foto.extent) {
-    final = sobreFondoBlanco(foto, mascara: mascara, caja: caja)
-    modo = .fondoBlanco
+  if usarFondoBlanco {
+    final = cuadrado(foto)
+    let handler = VNImageRequestHandler(ciImage: foto)
+    let pedido = VNGenerateForegroundInstanceMaskRequest()
+    if (try? handler.perform([pedido])) != nil, let resultado = pedido.results?.first,
+       let mascara = try? resultado.generateScaledMaskForImage(forInstances: resultado.allInstances, from: handler),
+       let caja = cajaDeContenido(mascara), !tocaBorde(caja, foto.extent) {
+      final = sobreFondoBlanco(foto, mascara: mascara, caja: caja)
+      modo = .fondoBlanco
+    }
   }
 
-  // Sin metadatos: la foto publicada no debe llevar GPS, modelo del teléfono ni fecha.
-  try ctx.writeJPEGRepresentation(
-    of: final.settingProperties([:]), to: salida, colorSpace: CGColorSpace(name: CGColorSpace.sRGB)!,
-    options: [CIImageRepresentationOption(rawValue: kCGImageDestinationLossyCompressionQuality as String): calidadJPEG])
+  try guardarJPEG(final, salida)
+  let mini = salida.deletingPathExtension().lastPathComponent + "-mini.jpg"
+  try guardarJPEG(cuadrado(final, ladoMini), salida.deletingLastPathComponent().appendingPathComponent(mini))
   return modo
 }
 
@@ -162,8 +191,10 @@ for carpeta in carpetas {
     .sorted { $0.lastPathComponent.localizedStandardCompare($1.lastPathComponent) == .orderedAscending }
   guard !imagenes.isEmpty else { continue }
 
-  // Borrar las fotos generadas antes para este producto.
-  for viejo in try fm.contentsOfDirectory(atPath: destino.path) where viejo.hasPrefix("\(id)-") {
+  // Borrar las fotos generadas antes para este producto (solo "<id>-N.jpg" y "<id>-N-mini.jpg",
+  // para no tocar otro producto cuyo id empiece igual, ej. switch-oled-white-used).
+  let generada = try Regex("^\(id)-[0-9]+(-mini)?\\.jpg$")
+  for viejo in try fm.contentsOfDirectory(atPath: destino.path) where viejo.wholeMatch(of: generada) != nil {
     try fm.removeItem(at: destino.appendingPathComponent(viejo))
   }
 
@@ -174,7 +205,8 @@ for carpeta in carpetas {
     do {
       let modo = try procesar(imagen, a: destino.appendingPathComponent(nombre))
       generadas.append((nombre, modo))
-      print("   \(modo == .fondoBlanco ? "✅ fondo blanco " : "📷 foto original") \(imagen.lastPathComponent) → \(nombre)")
+      let kb = ((try? destino.appendingPathComponent(nombre).resourceValues(forKeys: [.fileSizeKey]).fileSize) ?? 0) / 1024
+      print("   \(modo == .fondoBlanco ? "✅ fondo blanco " : "📷 foto original") \(imagen.lastPathComponent) → \(nombre) (\(kb) KB)")
     } catch {
       errores += 1
       print("   ❌ \(imagen.lastPathComponent): no se pudo abrir")

@@ -1,6 +1,6 @@
 // Página de detalle: galería de fotos, descripción, qué incluye y características.
 (function () {
-  const { COND, CAT, msgWhatsApp, precioHTML } = window.CATALOGO;
+  const { COND, CAT, msgWhatsApp, precioHTML, mini } = window.CATALOGO;
   const id = new URLSearchParams(location.search).get("id");
   const p = window.PRODUCTOS.find((x) => x.id === id);
   const main = document.getElementById("detalle");
@@ -28,7 +28,7 @@
       </div>
       ${fotos.length > 1 ? `
         <div class="thumbs">
-          ${fotos.map((f, i) => `<button class="${i ? "" : "on"}" data-i="${i}" aria-label="Ver foto ${i + 1}"><img src="${f}" alt="" loading="lazy"></button>`).join("")}
+          ${fotos.map((f, i) => `<button class="${i ? "" : "on"}" data-i="${i}" aria-label="Ver foto ${i + 1}"><img src="${mini(f)}" alt="" loading="lazy"></button>`).join("")}
         </div>` : ""}`
     : `<div class="gallery-main placeholder-big"><div class="emoji">${p.emoji || "🎮"}</div><small>Fotos próximamente</small></div>`;
 
