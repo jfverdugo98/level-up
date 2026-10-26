@@ -126,7 +126,6 @@ window.PRODUCTOS = [
   },
   {
     id: "switch-v1-custom-512",
-    portada: 4,
     nombre: "Nintendo Switch Custom + microSD 512 GB Edición Gengar",
     categoria: "consola",
     marca: "Nintendo",
@@ -147,6 +146,7 @@ window.PRODUCTOS = [
     marca: "Nintendo",
     condicion: "usado",
     precio: 190,
+    precioAntes: 220,
     descripcion: "Switch con Joy-Con rojo y verde neón, base y Joy-Con Grip.",
     detalle: "Nintendo Switch con una combinación de Joy-Con poco común: rojo neón el izquierdo y verde neón el derecho. Incluye base para conectar al TV y Joy-Con Grip. Revisada y probada antes de la venta.",
     incluye: ["Consola Nintendo Switch", "Joy-Con rojo y verde neón", "Base (dock)", "Joy-Con Grip", "Cargador y cable HDMI"], // TODO confirmar cargador y HDMI
