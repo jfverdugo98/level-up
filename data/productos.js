@@ -20,9 +20,9 @@ window.PRODUCTOS = [
     nombre: "Nintendo Switch OLED Edición Mario",
     categoria: "consola",
     marca: "Nintendo",
-    condicion: "usado",
-    precio: 350,
-    precioAntes: 370,
+    condicion: "openbox",
+    precio: 320,
+    precioAntes: 350,
     descripcion: "Edición especial roja de Mario con pantalla OLED de 7\". Completa, con su caja.",
     detalle: "La edición especial Mario Red de la Switch OLED: consola, Joy-Con y base en rojo Mario. Pantalla OLED de 7\" con colores intensos, parlantes mejorados y soporte trasero ancho ajustable. Revisada y probada: pantalla, Joy-Con, carga y conexión al TV.",
     incluye: ["Consola Switch OLED Edición Mario", "Joy-Con rojos (izquierdo y derecho)", "Base (dock) roja con puerto LAN", "Joy-Con Grip", "Cargador original", "Cable HDMI", "Caja original"],
@@ -90,7 +90,6 @@ window.PRODUCTOS = [
     incluye: ["Consola Switch OLED", "Joy-Con azul y rojo neón", "Base (dock) negra con puerto LAN", "Joy-Con Grip", "Cargador y cable HDMI", "Caja original"],
     specs: { "Modelo": "Switch OLED (HEG-001)", "Pantalla": "OLED 7\"", "Almacenamiento interno": "64 GB", "Modos de juego": "TV, sobremesa y portátil" },
     disponible: true,
-    destacado: true,
     emoji: "🔵",
   },
   {
@@ -136,7 +135,6 @@ window.PRODUCTOS = [
     incluye: ["Consola Nintendo Switch", "Joy-Con custom transparentes morado y rojo", "Base (dock)", "Joy-Con Grip", "microSD SanDisk 512 GB edición Gengar", "Estuche de transporte", "Cargador y cable HDMI", "Caja"], // TODO confirmar cargador y HDMI
     specs: { "Modelo": "Switch V1 (HAC-001)", "Pantalla": "LCD 6,2\"", "Almacenamiento interno": "32 GB", "Almacenamiento extra": "microSD 512 GB", "Modos de juego": "TV, sobremesa y portátil" },
     disponible: true,
-    destacado: true,
     emoji: "💜",
   },
   {
@@ -152,6 +150,7 @@ window.PRODUCTOS = [
     incluye: ["Consola Nintendo Switch", "Joy-Con rojo y verde neón", "Base (dock)", "Joy-Con Grip", "Cargador y cable HDMI"], // TODO confirmar cargador y HDMI
     specs: { "Modelo": "Switch (HAC-001)", "Pantalla": "LCD 6,2\"", "Almacenamiento interno": "32 GB", "Modos de juego": "TV, sobremesa y portátil" }, // TODO confirmar V1 o V2
     disponible: true,
+    destacado: true,
     emoji: "💚",
   },
   {
