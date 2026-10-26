@@ -125,6 +125,36 @@ window.PRODUCTOS = [
     emoji: "🩶",
   },
   {
+    id: "switch-v1-custom-512",
+    portada: 4,
+    nombre: "Nintendo Switch Custom + microSD 512 GB Edición Gengar",
+    categoria: "consola",
+    marca: "Nintendo",
+    condicion: "usado",
+    precio: 390,
+    descripcion: "Switch con Joy-Con modificados transparentes morado y rojo. Incluye microSD SanDisk 512 GB edición Gengar.",
+    detalle: "Nintendo Switch personalizada con carcasas transparentes en los Joy-Con: morado el izquierdo y rojo el derecho, dejando ver los circuitos por dentro. Viene con una microSD SanDisk de 512 GB con licencia oficial, edición Pokémon Gengar, y un estuche de transporte. Revisada y probada antes de la venta.",
+    incluye: ["Consola Nintendo Switch", "Joy-Con custom transparentes morado y rojo", "Base (dock)", "Joy-Con Grip", "microSD SanDisk 512 GB edición Gengar", "Estuche de transporte", "Cargador y cable HDMI", "Caja"], // TODO confirmar cargador y HDMI
+    specs: { "Modelo": "Switch V1 (HAC-001)", "Pantalla": "LCD 6,2\"", "Almacenamiento interno": "32 GB", "Almacenamiento extra": "microSD 512 GB", "Modos de juego": "TV, sobremesa y portátil" },
+    disponible: true,
+    destacado: true,
+    emoji: "💜",
+  },
+  {
+    id: "switch-red-green",
+    nombre: "Nintendo Switch Joy-Con Rojo y Verde Neón",
+    categoria: "consola",
+    marca: "Nintendo",
+    condicion: "usado",
+    precio: 190,
+    descripcion: "Switch con Joy-Con rojo y verde neón, base y Joy-Con Grip.",
+    detalle: "Nintendo Switch con una combinación de Joy-Con poco común: rojo neón el izquierdo y verde neón el derecho. Incluye base para conectar al TV y Joy-Con Grip. Revisada y probada antes de la venta.",
+    incluye: ["Consola Nintendo Switch", "Joy-Con rojo y verde neón", "Base (dock)", "Joy-Con Grip", "Cargador y cable HDMI"], // TODO confirmar cargador y HDMI
+    specs: { "Modelo": "Switch (HAC-001)", "Pantalla": "LCD 6,2\"", "Almacenamiento interno": "32 GB", "Modos de juego": "TV, sobremesa y portátil" }, // TODO confirmar V1 o V2
+    disponible: true,
+    emoji: "💚",
+  },
+  {
     id: "ps4-slim-1tb",
     nombre: "PlayStation 4 Slim 1 TB",
     categoria: "consola",
