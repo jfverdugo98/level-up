@@ -1,7 +1,10 @@
 // Tarjetas de producto, buscador y filtros del catálogo.
 (function () {
   const COND = { usado: "Usado", openbox: "Open box", sellado: "Sellado" };
-  const CAT = { consola: "Consola", accesorio: "Accesorio" };
+  const CAT = { consola: "Consola", juego: "Juego", control: "Control", accesorio: "Accesorio", sd: "Tarjeta SD" };
+  const CATS = { consola: "Consolas", juego: "Juegos", control: "Controles", accesorio: "Accesorios", sd: "Tarjetas SD" };
+  const urlCategoria = (cat, plat) =>
+    `productos.html?cat=${cat}${plat ? `&plat=${encodeURIComponent(plat)}` : ""}`;
   // Versión cuadrada de 600 px que genera el script para las tarjetas.
   const mini = (f) => f.replace(/\.jpg(\?|$)/, "-mini.jpg$1");
   const urlDetalle = (p) => `producto.html?id=${encodeURIComponent(p.id)}`;
@@ -50,7 +53,7 @@
       <article class="card" data-id="${p.id}">
         ${mediaHTML(p)}
         <div class="card-body">
-          <div class="card-cat">${CAT[p.categoria]} · ${p.marca}</div>
+          <div class="card-cat">${CAT[p.categoria]} · ${p.plataforma}</div>
           <h3><a class="card-link" href="${urlDetalle(p)}">${p.nombre}</a></h3>
           <p class="desc">${p.descripcion}</p>
           ${precioHTML(p)}
@@ -64,7 +67,7 @@
       </article>`;
 
   // Compartido con la página de detalle (js/producto.js)
-  window.CATALOGO = { COND, CAT, urlDetalle, msgWhatsApp, precioHTML, mini };
+  window.CATALOGO = { COND, CAT, CATS, urlCategoria, urlDetalle, msgWhatsApp, precioHTML, mini };
 
   // Cambiar de foto con los puntitos (delegado, sirve en Home y Catálogo)
   document.addEventListener("click", (e) => {
@@ -80,28 +83,35 @@
   const grid = document.getElementById("catalogo");
   if (!grid) return;
 
-  const state = { q: "", categoria: "todos", marca: "todas", condicion: "todas", soloDisp: false };
+  const state = { q: "", categoria: "todos", plataforma: "todas", condicion: "todas", soloDisp: false };
+  // Enlaces directos: productos.html?cat=juego&plat=PS5&q=mario
   const params = new URLSearchParams(location.search);
   if (params.get("q")) state.q = params.get("q");
+  if (CAT[params.get("cat")]) state.categoria = params.get("cat");
+  if (params.get("plat")) state.plataforma = params.get("plat");
 
   const norm = (s) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
 
   function render() {
     const q = norm(state.q.trim());
     const items = window.PRODUCTOS.filter((p) =>
-      (!q || norm(`${p.nombre} ${p.descripcion} ${p.marca} ${CAT[p.categoria]} ${COND[p.condicion]}`).includes(q)) &&
+      (!q || norm(`${p.nombre} ${p.descripcion} ${p.marca} ${p.plataforma} ${CAT[p.categoria]} ${COND[p.condicion]}`).includes(q)) &&
       (state.categoria === "todos" || p.categoria === state.categoria) &&
-      (state.marca === "todas" || p.marca === state.marca) &&
+      (state.plataforma === "todas" || p.plataforma === state.plataforma) &&
       (state.condicion === "todas" || p.condicion === state.condicion) &&
       (!state.soloDisp || p.disponible)
     ).sort((a, b) => b.disponible - a.disponible);
 
     document.getElementById("count").textContent =
       `${items.length} producto${items.length === 1 ? "" : "s"}`;
+    // Sin resultados: lo que se buscó, en palabras ("Juegos PS5 mario"), para el mensaje de WhatsApp.
+    const buscado = [CATS[state.categoria], state.plataforma !== "todas" && state.plataforma, state.q.trim()]
+      .filter(Boolean).join(" ");
     grid.innerHTML = items.length
       ? items.map(window.renderCard).join("")
-      : `<p class="empty">No encontramos productos con esa búsqueda 👾<br>
-         <a class="btn btn-wa btn-sm" style="margin-top:16px" href="${waLink(`¡Hola Level Up! Estoy buscando: ${state.q}`)}" target="_blank" rel="noopener">Pregúntanos por WhatsApp</a></p>`;
+      : `<p class="empty">Por ahora no tenemos ${buscado ? `<b>${buscado}</b>` : "productos con esa búsqueda"} 👾<br>
+         Escríbenos y te avisamos apenas lleguen.<br>
+         <a class="btn btn-wa btn-sm" style="margin-top:16px" href="${waLink(`¡Hola Level Up! 🎮 Estoy buscando: ${buscado}`)}" target="_blank" rel="noopener">Pregúntanos por WhatsApp</a></p>`;
   }
 
   const input = document.getElementById("buscar");
@@ -109,6 +119,7 @@
   input.addEventListener("input", (e) => { state.q = e.target.value; render(); });
 
   document.querySelectorAll(".chips").forEach((group) => {
+    group.querySelectorAll(".chip").forEach((c) => c.classList.toggle("on", c.dataset.val === state[group.dataset.key]));
     group.addEventListener("click", (e) => {
       const chip = e.target.closest(".chip");
       if (!chip) return;

@@ -1,6 +1,6 @@
 // Página de detalle: galería de fotos, descripción, qué incluye y características.
 (function () {
-  const { COND, CAT, msgWhatsApp, precioHTML, mini } = window.CATALOGO;
+  const { COND, CAT, CATS, urlCategoria, msgWhatsApp, precioHTML, mini } = window.CATALOGO;
   const id = new URLSearchParams(location.search).get("id");
   const p = window.PRODUCTOS.find((x) => x.id === id);
   const main = document.getElementById("detalle");
@@ -41,11 +41,11 @@
     : "";
 
   main.innerHTML = `
-    <nav class="breadcrumb"><a href="productos.html">← Catálogo</a> / ${CAT[p.categoria]}s / ${p.marca}</nav>
+    <nav class="breadcrumb"><a href="productos.html">← Catálogo</a> / <a href="${urlCategoria(p.categoria)}">${CATS[p.categoria]}</a> / <a href="${urlCategoria(p.categoria, p.plataforma)}">${p.plataforma}</a></nav>
     <div class="product-layout">
       <div class="gallery">${galeria}</div>
       <div class="product-info">
-        <div class="card-cat">${CAT[p.categoria]} · ${p.marca}</div>
+        <div class="card-cat">${CAT[p.categoria]} · ${p.plataforma}</div>
         <h1>${p.nombre}</h1>
         ${precioHTML(p)}
         <p class="lead-desc">${p.detalle || p.descripcion}</p>

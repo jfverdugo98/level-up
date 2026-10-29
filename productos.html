@@ -4,21 +4,21 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Productos · Level Up</title>
-  <meta name="description" content="Catálogo de Level Up: Nintendo Switch OLED, Switch V2, accesorios y más. Usados y open box.">
+  <meta name="description" content="Catálogo de Level Up: consolas Nintendo Switch, PS4 y PS5, juegos, controles, accesorios y tarjetas SD. Usados, open box y sellados.">
   <link rel="icon" href="assets/logo-icono.png" type="image/png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/styles.css?v=2">
 </head>
 <body data-page="productos">
   <main class="container block">
     <h1 class="section-title"><span class="pink">CATALOGO</span></h1>
-    <p class="section-sub">Consolas y accesorios usados y open box. ¿No ves lo que buscas? Escríbenos.</p>
+    <p class="section-sub">Consolas, juegos, controles y accesorios de Nintendo y PlayStation. ¿No ves lo que buscas? Escríbenos.</p>
 
     <div class="toolbar">
       <label class="search">
-        🔍 <input id="buscar" type="search" placeholder="Buscar: OLED, Mario, Joy-Con…" autocomplete="off">
+        🔍 <input id="buscar" type="search" placeholder="Buscar: OLED, Mario Kart, PS5, Joy-Con…" autocomplete="off">
       </label>
       <label class="toggle"><input type="checkbox" id="soloDisp"> Solo disponibles</label>
     </div>
@@ -27,17 +27,23 @@
       <div class="chips" data-key="categoria">
         <button class="chip on" data-val="todos">Todo</button>
         <button class="chip" data-val="consola">Consolas</button>
+        <button class="chip" data-val="juego">Juegos</button>
+        <button class="chip" data-val="control">Controles</button>
         <button class="chip" data-val="accesorio">Accesorios</button>
+        <button class="chip" data-val="sd">Tarjetas SD</button>
       </div>
-      <div class="chips" data-key="marca">
-        <button class="chip on" data-val="todas">Todas las marcas</button>
-        <button class="chip" data-val="Nintendo">Nintendo</button>
-        <button class="chip" data-val="PlayStation">PlayStation</button>
+      <div class="chips" data-key="plataforma">
+        <button class="chip on" data-val="todas">Todas las plataformas</button>
+        <button class="chip" data-val="Switch">Switch</button>
+        <button class="chip" data-val="Switch 2">Switch 2</button>
+        <button class="chip" data-val="PS4">PS4</button>
+        <button class="chip" data-val="PS5">PS5</button>
       </div>
       <div class="chips" data-key="condicion">
         <button class="chip on" data-val="todas">Cualquier estado</button>
         <button class="chip" data-val="usado">Usado</button>
         <button class="chip" data-val="openbox">Open box</button>
+        <button class="chip" data-val="sellado">Sellado</button>
       </div>
     </div>
 
@@ -45,10 +51,10 @@
     <div class="grid" id="catalogo"></div>
   </main>
 
-  <script src="js/config.js"></script>
-  <script src="data/productos.js"></script>
-  <script src="data/fotos.js"></script>
-  <script src="js/layout.js"></script>
-  <script src="js/catalogo.js"></script>
+  <script src="js/config.js?v=2"></script>
+  <script src="data/productos.js?v=2"></script>
+  <script src="data/fotos.js?v=2"></script>
+  <script src="js/layout.js?v=2"></script>
+  <script src="js/catalogo.js?v=2"></script>
 </body>
 </html>

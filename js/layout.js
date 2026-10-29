@@ -44,7 +44,7 @@
         <div class="footer-grid">
           <div>
             <h4>LEVEL UP</h4>
-            <p>Compra y venta de consolas usadas y open box.<br>Tienda virtual en San Juan de Colón.</p>
+            <p>Consolas, juegos, controles y accesorios.<br>Tienda virtual en San Juan de Colón.</p>
             ${redes ? `<div class="socials">${redes}</div>` : ""}
           </div>
           <div>

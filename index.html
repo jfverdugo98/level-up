@@ -3,19 +3,19 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Level Up · Consolas usadas y open box</title>
-  <meta name="description" content="Level Up: compra y venta de consolas Nintendo Switch usadas y open box. Tienda virtual en San Juan de Colón con entregas en San Cristóbal.">
+  <title>Level Up · Consolas, juegos y controles</title>
+  <meta name="description" content="Level Up: compra y venta de consolas Nintendo Switch, PS4 y PS5, juegos, controles y accesorios. Tienda virtual en San Juan de Colón con entregas en San Cristóbal.">
   <link rel="icon" href="assets/logo-icono.png" type="image/png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/styles.css?v=2">
 </head>
 <body data-page="home">
   <main>
     <section class="hero container">
       <h1 class="hero-logo"><img src="assets/logo-completo.png" alt="Level Up" width="670" height="520"></h1>
-      <p class="lead">Consolas Nintendo Switch usadas y open box, revisadas y listas para jugar. Escríbenos y coordinamos tu entrega en San Cristóbal.</p>
+      <p class="lead">Consolas, juegos y controles de Nintendo Switch y PlayStation, revisados y listos para jugar. Escríbenos y coordinamos tu entrega en San Cristóbal.</p>
       <div class="hero-cta">
         <a class="btn btn-pink" href="productos.html">🎮 Ver catálogo</a>
         <a class="btn btn-blue" id="heroWa" target="_blank" rel="noopener">💬 Escríbenos</a>
@@ -28,6 +28,18 @@
     </section>
 
     <div class="bolt-divider"></div>
+
+    <section class="block container">
+      <h2 class="section-title"><span class="blue">CATEGORIAS</span></h2>
+      <p class="section-sub">Explora por tipo de producto.</p>
+      <div class="cat-grid">
+        <a class="cat-tile" href="productos.html?cat=consola"><span class="ico">🎮</span><b>Consolas</b><small>Switch · Switch 2 · PS4 · PS5</small></a>
+        <a class="cat-tile" href="productos.html?cat=juego"><span class="ico">💿</span><b>Juegos</b><small>Nintendo · PS4 · PS5</small></a>
+        <a class="cat-tile" href="productos.html?cat=control"><span class="ico">🕹️</span><b>Controles</b><small>Joy-Con · DualShock 4 · DualSense</small></a>
+        <a class="cat-tile" href="productos.html?cat=accesorio"><span class="ico">🎧</span><b>Accesorios</b><small>Estuches, bases y más</small></a>
+        <a class="cat-tile" href="productos.html?cat=sd"><span class="ico">💾</span><b>Tarjetas SD</b><small>Más espacio para tus juegos</small></a>
+      </div>
+    </section>
 
     <section class="block container">
       <h2 class="section-title"><span class="pink">DESTACADOS</span></h2>
@@ -60,18 +72,18 @@
         <div class="coming-card ps">
           <span class="tag">BAJO PEDIDO</span>
           <h3>PlayStation 4 y 5</h3>
-          <p>También trabajamos PlayStation. ¿Buscas PS4 o PS5? Escríbenos y te avisamos cuando tengamos una.</p>
+          <p>También trabajamos PlayStation. Por ahora las PS4 y PS5 están agotadas, pero estamos consiguiendo más: escríbenos y te avisamos apenas llegue una.</p>
           <a class="btn btn-blue btn-sm" id="waPs" target="_blank" rel="noopener">Consultar</a>
         </div>
       </div>
     </section>
   </main>
 
-  <script src="js/config.js"></script>
-  <script src="data/productos.js"></script>
-  <script src="data/fotos.js"></script>
-  <script src="js/layout.js"></script>
-  <script src="js/catalogo.js"></script>
+  <script src="js/config.js?v=2"></script>
+  <script src="data/productos.js?v=2"></script>
+  <script src="data/fotos.js?v=2"></script>
+  <script src="js/layout.js?v=2"></script>
+  <script src="js/catalogo.js?v=2"></script>
   <script>
     document.getElementById("heroWa").href = waLink();
     document.getElementById("waPs").href = waLink("¡Hola Level Up! 🎮 ¿Tienen disponible PlayStation 4 o 5?");
