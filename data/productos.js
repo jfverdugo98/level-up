@@ -14,6 +14,7 @@
 //   disponible:  false lo muestra como "Agotado"
 //   destacado:   true lo muestra en el Home
 //   portada:     (opcional) número de la foto que va primero, contando en el orden de su carpeta
+//   fotoReferencial: (opcional) true si las fotos son imágenes oficiales de internet y no del producto real
 // Las fotos se agregan solas con "Preparar fotos.command" (data/fotos.js).
 window.PRODUCTOS = [
   {
@@ -240,7 +241,7 @@ window.PRODUCTOS = [
     disponible: true,
     emoji: "🗡️",
   },
-  // ---- Juegos ---- TODO fotos (carpetas en fotos-originales/ con el mismo id)
+  // ---- Juegos ---- TODO fotos reales (FC 24 y FIFA 19 no tienen; las demás son imagen oficial referencial)
   {
     id: "juego-mario-kart-8",
     nombre: "Mario Kart 8 Deluxe",
@@ -253,6 +254,7 @@ window.PRODUCTOS = [
     detalle: "Mario Kart 8 Deluxe para Nintendo Switch: carreras con Mario y sus amigos, modo batalla y multijugador en la misma consola o en línea. Juego físico en cartucho, con su caja.",
     incluye: ["Cartucho del juego", "Caja original"],
     specs: { "Plataforma": "Nintendo Switch", "Formato": "Físico (cartucho)", "Jugadores en la misma consola": "1 a 4" },
+    fotoReferencial: true,
     disponible: true,
     emoji: "🏎️",
   },
@@ -268,6 +270,7 @@ window.PRODUCTOS = [
     detalle: "Animal Crossing: New Horizons para Nintendo Switch: múdate a una isla desierta, decórala, haz amigos entre los vecinos y visita las islas de otros jugadores. Juego físico en cartucho, con su caja.",
     incluye: ["Cartucho del juego", "Caja original"],
     specs: { "Plataforma": "Nintendo Switch", "Formato": "Físico (cartucho)", "Jugadores en la misma consola": "1 a 4" },
+    fotoReferencial: true,
     disponible: true,
     emoji: "🍃",
   },
@@ -283,6 +286,7 @@ window.PRODUCTOS = [
     detalle: "Mortal Kombat 11 para Nintendo Switch: el juego de pelea con modo historia, torres y combates contra un amigo. Juego físico en cartucho, con su caja.",
     incluye: ["Cartucho del juego", "Caja original"],
     specs: { "Plataforma": "Nintendo Switch", "Formato": "Físico (cartucho)", "Jugadores en la misma consola": "1 a 2" },
+    fotoReferencial: true,
     disponible: true,
     emoji: "🐉",
   },
@@ -298,6 +302,7 @@ window.PRODUCTOS = [
     detalle: "Super Mario Party Jamboree para Nintendo Switch: tableros, minijuegos y diversión para toda la familia. Juego físico en cartucho, con su caja.",
     incluye: ["Cartucho del juego", "Caja original"],
     specs: { "Plataforma": "Nintendo Switch", "Formato": "Físico (cartucho)", "Jugadores en la misma consola": "1 a 4" },
+    fotoReferencial: true,
     disponible: true,
     emoji: "🎲",
   },

@@ -15,7 +15,8 @@
 // De cada foto genera dos archivos en assets/productos/:
 //   <id>-N.jpg       grande, para la página del producto
 //   <id>-N-mini.jpg  cuadrada de 600 px, para las tarjetas del catálogo
-// y escribe data/fotos.js para la web.
+// y escribe data/fotos.js para la web. Una foto llamada "oficial…" (imagen referencial
+// de internet) se deja entera en la mini, sin recortar, para no cortar el título.
 //
 // El id del producto es el nombre de la carpeta en minúsculas, con cualquier
 // símbolo cambiado por "-"  (ej. "joycons-pink&green" → "joycons-pink-green").
@@ -85,6 +86,18 @@ func cuadrado(_ foto: CIImage, _ tam: CGFloat = lado) -> CIImage {
     .transformed(by: .init(translationX: -(e.minX + (e.width - l) / 2), y: -(e.minY + (e.height - l) / 2)))
     .transformed(by: .init(scaleX: escala, y: escala))
     .cropped(to: CGRect(x: 0, y: 0, width: tam, height: tam))
+}
+
+// Foto completa centrada en un cuadrado de `tam` px con el fondo oscuro de la web (sin recortar).
+func encuadrada(_ foto: CIImage, _ tam: CGFloat) -> CIImage {
+  let e = foto.extent
+  let escala = tam / max(e.width, e.height)
+  let fondo = CIImage(color: CIColor(red: 14 / 255, green: 14 / 255, blue: 26 / 255)).cropped(to: CGRect(x: 0, y: 0, width: tam, height: tam))
+  return foto
+    .transformed(by: .init(scaleX: escala, y: escala))
+    .transformed(by: .init(translationX: (tam - e.width * escala) / 2, y: (tam - e.height * escala) / 2))
+    .composited(over: fondo)
+    .cropped(to: fondo.extent)
 }
 
 // Foto completa, achicada para que su lado más largo no pase de `maximo` (nunca la agranda).
@@ -158,7 +171,9 @@ func procesar(_ url: URL, a salida: URL) throws -> Modo {
 
   try guardarJPEG(final, salida)
   let mini = salida.deletingPathExtension().lastPathComponent + "-mini.jpg"
-  try guardarJPEG(cuadrado(final, ladoMini), salida.deletingLastPathComponent().appendingPathComponent(mini))
+  // Imágenes oficiales (archivo "oficial*"): traen el título del juego, así que la mini va entera, sin recortar.
+  let entera = url.lastPathComponent.lowercased().hasPrefix("oficial")
+  try guardarJPEG(entera ? encuadrada(final, ladoMini) : cuadrado(final, ladoMini), salida.deletingLastPathComponent().appendingPathComponent(mini))
   return modo
 }
 

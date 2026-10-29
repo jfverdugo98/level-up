@@ -35,7 +35,10 @@
   const mediaHTML = (p) => {
     const fotos = p.fotos || [];
     const img = fotos.length
-      ? `<img src="${mini(fotos[0])}" alt="${p.nombre}" loading="lazy">`
+      // Tira deslizable: con el dedo se pasa a la siguiente foto; tocarla abre el producto.
+      ? `<a class="slides" href="${urlDetalle(p)}" tabindex="-1" aria-hidden="true">${fotos
+          .map((f, i) => `<img src="${mini(f)}" alt="${p.nombre}${i ? ` (foto ${i + 1})` : ""}" loading="lazy" draggable="false">`)
+          .join("")}</a>`
       : `<div class="placeholder"><div class="emoji">${p.emoji || "🎮"}</div><small>Foto próximamente</small></div>`;
     const dots = fotos.length > 1
       ? `<div class="photo-nav">${fotos.map((_, i) => `<button class="${i ? "" : "on"}" data-i="${i}" aria-label="Foto ${i + 1}"></button>`).join("")}</div>`
@@ -44,6 +47,7 @@
       <div class="card-media">
         ${img}
         <span class="cond ${p.condicion}">${COND[p.condicion]}</span>
+        ${p.fotoReferencial && fotos.length ? `<span class="ref-tag">Imagen referencial</span>` : ""}
         ${p.disponible ? "" : `<div class="sold-out">AGOTADO</div>`}
         ${dots}
       </div>`;
@@ -69,15 +73,20 @@
   // Compartido con la página de detalle (js/producto.js)
   window.CATALOGO = { COND, CAT, CATS, urlCategoria, urlDetalle, msgWhatsApp, precioHTML, mini };
 
-  // Cambiar de foto con los puntitos (delegado, sirve en Home y Catálogo)
+  // Fotos de la tarjeta (delegado, sirve en Home y Catálogo):
+  // los puntitos llevan a su foto y, al deslizar, se marca el puntito de la foto visible.
   document.addEventListener("click", (e) => {
     const dot = e.target.closest(".photo-nav button");
     if (!dot) return;
-    const card = dot.closest(".card");
-    const p = window.PRODUCTOS.find((x) => x.id === card.dataset.id);
-    card.querySelector(".card-media img").src = mini(p.fotos[dot.dataset.i]);
-    card.querySelectorAll(".photo-nav button").forEach((b) => b.classList.toggle("on", b === dot));
+    const slides = dot.closest(".card-media").querySelector(".slides");
+    slides.scrollTo({ left: dot.dataset.i * slides.clientWidth, behavior: "smooth" });
   });
+  document.addEventListener("scroll", (e) => {
+    const slides = e.target.closest && e.target.closest(".slides");
+    if (!slides) return;
+    const i = Math.round(slides.scrollLeft / slides.clientWidth);
+    slides.parentElement.querySelectorAll(".photo-nav button").forEach((b, j) => b.classList.toggle("on", i === j));
+  }, true);
 
   // ---- Página de catálogo ----
   const grid = document.getElementById("catalogo");

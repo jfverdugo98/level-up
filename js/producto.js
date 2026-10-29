@@ -25,6 +25,7 @@
           <button class="g-next" aria-label="Foto siguiente">›</button>
           <span class="g-count" id="contador">1 / ${fotos.length}</span>` : ""}
         <span class="cond ${p.condicion}">${COND[p.condicion]}</span>
+        ${p.fotoReferencial ? `<span class="ref-tag">Imagen referencial · pídenos fotos reales por WhatsApp</span>` : ""}
       </div>
       ${fotos.length > 1 ? `
         <div class="thumbs">
