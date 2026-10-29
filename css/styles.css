@@ -299,3 +299,13 @@ section.block { padding: 56px 0; }
 }
 .price-old { font-family: var(--body); font-size: .8em; font-weight: 600; color: var(--muted); text-shadow: none; margin-left: 6px; }
 .price-off { font-family: var(--body); font-size: .75em; font-weight: 700; color: #fff; background: var(--blue); text-shadow: none; padding: 2px 8px; border-radius: 999px; vertical-align: middle; }
+
+/* Redes sociales (footer) */
+.socials { display: flex; gap: 10px; margin-top: 16px; }
+.footer .social {
+  width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center;
+  border: 1px solid var(--line); background: var(--card); color: var(--text); transition: .2s;
+}
+.footer .social svg { width: 20px; height: 20px; }
+.footer .social:hover { color: #fff; border-color: var(--pink); box-shadow: var(--glow-pink); transform: translateY(-2px); }
+.footer .social:nth-child(even):hover { border-color: var(--blue); box-shadow: var(--glow-blue); }

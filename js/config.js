@@ -4,7 +4,10 @@ window.LEVELUP = {
   telefonoVisible: "+58 412-290-3606",
   ubicacion: "San Juan de Colón, Táchira",
   entregas: "San Cristóbal",
-  instagram: "",                       // TODO: ej. "levelup.sjc" (sin @)
+  // Redes sociales: solo el nombre de usuario, sin @. Si queda vacío, el botón no aparece.
+  instagram: "levelup_sjc",
+  facebook: "Lev3lUP.sjc",
+  tiktok: "",                          // TODO: poner el usuario cuando se cree la cuenta
 };
 
 // Enlace de WhatsApp con mensaje prellenado.
