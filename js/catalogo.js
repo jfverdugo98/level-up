@@ -1,6 +1,8 @@
 // Tarjetas de producto, buscador y filtros del catálogo.
 (function () {
-  const COND = { usado: "Usado", openbox: "Open box", sellado: "Sellado" };
+  const COND = { nuevo: "Nuevo", usado: "Usado", openbox: "Open box", sellado: "Sellado" };
+  // plataforma puede ser una sola o una lista (ej. ["PS4", "PS5"]).
+  const plats = (p) => [].concat(p.plataforma);
   const CAT = { consola: "Consola", juego: "Juego", control: "Control", accesorio: "Accesorio", sd: "Tarjeta SD" };
   const CATS = { consola: "Consolas", juego: "Juegos", control: "Controles", accesorio: "Accesorios", sd: "Tarjetas SD" };
   const urlCategoria = (cat, plat) =>
@@ -9,7 +11,7 @@
   const mini = (f) => f.replace(/\.jpg(\?|$)/, "-mini.jpg$1");
   const urlDetalle = (p) => `producto.html?id=${encodeURIComponent(p.id)}`;
   const msgWhatsApp = (p) => p.disponible
-    ? `¡Hola Level Up! 🎮 Me interesa: ${p.nombre} (${COND[p.condicion]}). ¿Sigue disponible?`
+    ? `¡Hola Level Up! 🎮 Me interesa: ${p.nombre}${p.condicion ? ` (${COND[p.condicion]})` : ""}. ¿Sigue disponible?`
     : `¡Hola Level Up! 🎮 ¿Me avisan cuando tengan ${p.nombre}?`;
 
   // Fotos generadas por scripts/procesar_fotos.swift (data/fotos.js)
@@ -46,7 +48,7 @@
     return `
       <div class="card-media">
         ${img}
-        <span class="cond ${p.condicion}">${COND[p.condicion]}</span>
+        ${p.condicion ? `<span class="cond ${p.condicion}">${COND[p.condicion]}</span>` : ""}
         ${p.fotoReferencial && fotos.length ? `<span class="ref-tag">Imagen referencial</span>` : ""}
         ${p.disponible ? "" : `<div class="sold-out">AGOTADO</div>`}
         ${dots}
@@ -57,7 +59,7 @@
       <article class="card" data-id="${p.id}">
         ${mediaHTML(p)}
         <div class="card-body">
-          <div class="card-cat">${CAT[p.categoria]} · ${p.plataforma}</div>
+          <div class="card-cat">${CAT[p.categoria]} · ${plats(p).join(" · ")}</div>
           <h3><a class="card-link" href="${urlDetalle(p)}">${p.nombre}</a></h3>
           <p class="desc">${p.descripcion}</p>
           ${precioHTML(p)}
@@ -71,7 +73,7 @@
       </article>`;
 
   // Compartido con la página de detalle (js/producto.js)
-  window.CATALOGO = { COND, CAT, CATS, urlCategoria, urlDetalle, msgWhatsApp, precioHTML, mini };
+  window.CATALOGO = { COND, CAT, CATS, plats, urlCategoria, urlDetalle, msgWhatsApp, precioHTML, mini };
 
   // Fotos de la tarjeta (delegado, sirve en Home y Catálogo):
   // los puntitos llevan a su foto y, al deslizar, se marca el puntito de la foto visible.
@@ -104,9 +106,9 @@
   function render() {
     const q = norm(state.q.trim());
     const items = window.PRODUCTOS.filter((p) =>
-      (!q || norm(`${p.nombre} ${p.descripcion} ${p.marca} ${p.plataforma} ${CAT[p.categoria]} ${COND[p.condicion]}`).includes(q)) &&
+      (!q || norm(`${p.nombre} ${p.descripcion} ${p.marca} ${plats(p).join(" ")} ${CAT[p.categoria]} ${COND[p.condicion] || ""}`).includes(q)) &&
       (state.categoria === "todos" || p.categoria === state.categoria) &&
-      (state.plataforma === "todas" || p.plataforma === state.plataforma) &&
+      (state.plataforma === "todas" || plats(p).includes(state.plataforma)) &&
       (state.condicion === "todas" || p.condicion === state.condicion) &&
       (!state.soloDisp || p.disponible)
     ).sort((a, b) => b.disponible - a.disponible);

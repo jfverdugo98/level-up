@@ -267,7 +267,7 @@ section.block { padding: 56px 0; }
 .card-actions { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
 .ver-mas { color: var(--cyan); font-weight: 700; font-size: 15px; }
 .card:hover .ver-mas { text-shadow: var(--glow-blue); }
-.cond.sellado { background: #0aa37f; }
+.cond.sellado, .cond.nuevo { background: #0aa37f; }
 
 /* ===== Página de producto ===== */
 .breadcrumb { color: var(--muted); font-size: 16px; margin-bottom: 22px; }

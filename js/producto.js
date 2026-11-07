@@ -1,6 +1,6 @@
 // Página de detalle: galería de fotos, descripción, qué incluye y características.
 (function () {
-  const { COND, CAT, CATS, urlCategoria, msgWhatsApp, precioHTML, mini } = window.CATALOGO;
+  const { COND, CAT, CATS, plats, urlCategoria, msgWhatsApp, precioHTML, mini } = window.CATALOGO;
   const id = new URLSearchParams(location.search).get("id");
   const p = window.PRODUCTOS.find((x) => x.id === id);
   const main = document.getElementById("detalle");
@@ -24,7 +24,7 @@
           <button class="g-prev" aria-label="Foto anterior">‹</button>
           <button class="g-next" aria-label="Foto siguiente">›</button>
           <span class="g-count" id="contador">1 / ${fotos.length}</span>` : ""}
-        <span class="cond ${p.condicion}">${COND[p.condicion]}</span>
+        ${p.condicion ? `<span class="cond ${p.condicion}">${COND[p.condicion]}</span>` : ""}
         ${p.fotoReferencial ? `<span class="ref-tag">Imagen referencial · pídenos fotos reales por WhatsApp</span>` : ""}
       </div>
       ${fotos.length > 1 ? `
@@ -42,11 +42,11 @@
     : "";
 
   main.innerHTML = `
-    <nav class="breadcrumb"><a href="productos.html">← Catálogo</a> / <a href="${urlCategoria(p.categoria)}">${CATS[p.categoria]}</a> / <a href="${urlCategoria(p.categoria, p.plataforma)}">${p.plataforma}</a></nav>
+    <nav class="breadcrumb"><a href="productos.html">← Catálogo</a> / <a href="${urlCategoria(p.categoria)}">${CATS[p.categoria]}</a> / ${plats(p).map((x) => `<a href="${urlCategoria(p.categoria, x)}">${x}</a>`).join(" · ")}</nav>
     <div class="product-layout">
       <div class="gallery">${galeria}</div>
       <div class="product-info">
-        <div class="card-cat">${CAT[p.categoria]} · ${p.plataforma}</div>
+        <div class="card-cat">${CAT[p.categoria]} · ${plats(p).join(" · ")}</div>
         <h1>${p.nombre}</h1>
         ${precioHTML(p)}
         <p class="lead-desc">${p.detalle || p.descripcion}</p>
