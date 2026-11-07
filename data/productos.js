@@ -344,7 +344,6 @@ window.PRODUCTOS = [
     detalle: "Palanca de repuesto con sensor Hall Effect para Joy-Con. Para instalarla necesitas abrir el Joy-Con.",
     incluye: ["1 joystick Hall Effect"],
     specs: { "Tipo": "Repuesto de palanca", "Sensor": "Hall Effect", "Compatibilidad": "Joy-Con de Nintendo Switch" },
-    fotoReferencial: true,
     disponible: true,
     emoji: "🕹️",
   },
