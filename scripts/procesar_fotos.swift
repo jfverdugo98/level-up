@@ -12,7 +12,7 @@
 //     usa la foto original recortada en cuadrado, para no dejarlo "cortado".
 //   La portada de cada producto es la primera foto con fondo blanco.
 //
-// De cada foto genera dos archivos en assets/productos/:
+// De cada foto genera dos archivos en assets/productos/<id>/:
 //   <id>-N.jpg       grande, para la página del producto
 //   <id>-N-mini.jpg  cuadrada de 600 px, para las tarjetas del catálogo
 // y escribe data/fotos.js para la web. Una foto llamada "oficial…" (imagen referencial
@@ -206,21 +206,19 @@ for carpeta in carpetas {
     .sorted { $0.lastPathComponent.localizedStandardCompare($1.lastPathComponent) == .orderedAscending }
   guard !imagenes.isEmpty else { continue }
 
-  // Borrar las fotos generadas antes para este producto (solo "<id>-N.jpg" y "<id>-N-mini.jpg",
-  // para no tocar otro producto cuyo id empiece igual, ej. switch-oled-white-used).
-  let generada = try Regex("^\(id)-[0-9]+(-mini)?\\.jpg$")
-  for viejo in try fm.contentsOfDirectory(atPath: destino.path) where viejo.wholeMatch(of: generada) != nil {
-    try fm.removeItem(at: destino.appendingPathComponent(viejo))
-  }
+  // Carpeta del producto: se borran las fotos generadas antes y se vuelven a crear.
+  let carpetaProducto = destino.appendingPathComponent(id)
+  try? fm.removeItem(at: carpetaProducto)
+  try fm.createDirectory(at: carpetaProducto, withIntermediateDirectories: true)
 
   print("🎮 \(id) (\(imagenes.count) fotos)")
   var generadas: [(nombre: String, modo: Modo)] = []
   for imagen in imagenes {
     let nombre = "\(id)-\(generadas.count + 1).jpg"
     do {
-      let modo = try procesar(imagen, a: destino.appendingPathComponent(nombre))
+      let modo = try procesar(imagen, a: carpetaProducto.appendingPathComponent(nombre))
       generadas.append((nombre, modo))
-      let kb = ((try? destino.appendingPathComponent(nombre).resourceValues(forKeys: [.fileSizeKey]).fileSize) ?? 0) / 1024
+      let kb = ((try? carpetaProducto.appendingPathComponent(nombre).resourceValues(forKeys: [.fileSizeKey]).fileSize) ?? 0) / 1024
       print("   \(modo == .fondoBlanco ? "✅ fondo blanco " : "📷 foto original") \(imagen.lastPathComponent) → \(nombre) (\(kb) KB)")
     } catch {
       errores += 1
@@ -231,7 +229,7 @@ for carpeta in carpetas {
   if let i = generadas.firstIndex(where: { $0.modo == .fondoBlanco }), i > 0 {
     generadas.insert(generadas.remove(at: i), at: 0)
   }
-  fotos[id] = generadas.map { "assets/productos/\($0.nombre)" }
+  fotos[id] = generadas.map { "assets/productos/\(id)/\($0.nombre)" }
 }
 
 // Escribir data/fotos.js
