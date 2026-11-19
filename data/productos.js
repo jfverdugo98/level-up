@@ -236,7 +236,7 @@ window.PRODUCTOS = [
     detalle: "Tarjeta microSDXC SanDisk de 512 GB con licencia oficial de Nintendo, edición Pokémon Gengar. Sellada en su empaque. Lectura hasta 100 MB/s y escritura hasta 90 MB/s: perfecta para guardar decenas de juegos digitales.",
     incluye: ["Tarjeta microSDXC 512 GB (sellada)"],
     specs: { "Capacidad": "512 GB", "Velocidad": "Lectura 100 MB/s · Escritura 90 MB/s", "Compatibilidad": "Nintendo Switch y Switch 2" }, // TODO confirmar Switch 2
-    disponible: true,
+    disponible: false,
     emoji: "👻",
   },
   {
@@ -299,21 +299,6 @@ window.PRODUCTOS = [
     specs: { "Compatibilidad": "Joy-Con de Nintendo Switch" },
     disponible: true,
     emoji: "🔋",
-  },
-  {
-    id: "accesorio-joycon-wheel",
-    nombre: "Joy-Con Wheel (par)",
-    categoria: "accesorio",
-    marca: "Nintendo",
-    plataforma: "Switch",
-    condicion: "nuevo",
-    precio: 10,
-    descripcion: "Par de volantes para Joy-Con, uno rojo y uno azul. No incluye los Joy-Con.",
-    detalle: "Par de volantes para poner tus Joy-Con y jugar carreras como Mario Kart. Uno rojo y uno azul. Los Joy-Con que se ven en las fotos no están incluidos.",
-    incluye: ["Volante rojo", "Volante azul"],
-    specs: { "Compatibilidad": "Joy-Con de Nintendo Switch" },
-    disponible: true,
-    emoji: "🏎️",
   },
   {
     id: "accesorio-joystick-hall-effect",
